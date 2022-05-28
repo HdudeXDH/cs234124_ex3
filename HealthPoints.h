@@ -8,27 +8,28 @@ using std::ofstream;
 #ifndef EX3_HEALTHPOINTS_H
 #define EX3_HEALTHPOINTS_H
 
-static const int HP_DEFAULT = 100;
 // todo: validate negative values
 class HealthPoints {
-    int points;
-    int maxHp;
+    static const int HP_DEFAULT = 100;
+    int m_points;
+    int m_maxHp;
     friend std::ostream& operator<<(std::ostream& os, const HealthPoints& r);
-    friend bool operator==(const HealthPoints&, const HealthPoints&);
-    friend bool operator<(const HealthPoints&, const HealthPoints&);
+    friend bool operator==(const HealthPoints& hp1, const HealthPoints& hp2);
+    friend bool operator<(const HealthPoints& hp1, const HealthPoints& hp2);
 
 public:
     HealthPoints(const int hp=HP_DEFAULT);
     HealthPoints(const HealthPoints &hp_instance)= default;
     ~HealthPoints()= default;
-    HealthPoints &operator=(const HealthPoints &)= default;
-    explicit operator int() const; //todo: alon
-    HealthPoints &operator-(const HealthPoints &); // todo: ofir
-    HealthPoints &operator-=(const HealthPoints &); // todo: ofir
-    HealthPoints &operator+(const HealthPoints &); //todo: alon
-    HealthPoints &operator+=(const HealthPoints &); //todo: alon
+    HealthPoints &operator=(const HealthPoints& hp)= default;
+    HealthPoints &operator-=(const int points);
+    HealthPoints &operator+=(const int points);
     class InvalidArgument {};
 };
+
+HealthPoints operator-(const HealthPoints& hp1, const int points);
+HealthPoints operator+(const HealthPoints& hp1, const int points);
+
 
 bool operator!=(const HealthPoints& hp1, const HealthPoints& hp2);
 bool operator>=(const HealthPoints& hp1, const HealthPoints& hp2);
