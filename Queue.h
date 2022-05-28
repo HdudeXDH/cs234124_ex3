@@ -18,25 +18,40 @@ class Queue {
     class Iterator;
     Iterator begin() const;
     Iterator end() const;
-//    Iterator InvalidOperation(); todo: not sure how
 
 public:
-    explicit Queue(int maxSize = 100); //
-    Queue(const Queue& s);
-    ~Queue();
-    Queue& operator=(const Queue&);
-
+    explicit Queue(int maxSize = 100); //todo: ofir
+    Queue(const Queue& s); //todo: ofir
+    ~Queue(); //todo: alon
+    Queue& operator=(const Queue&); //todo: alon
     //Enters item to end of line, saves copy.
-    T pushBack(const T& t);
+    T pushBack(const T& t); //todo: alon
     //Return the first item in Queue
-    T& front();
+    T& front(); //todo: alon
     // Delete the first item in Queue
-    void popFront();
+    void popFront(); //todo: ofir
     // return the size of Queue
-    int size();
+    int size(); //todo: ofir
     // Exception:
     class EmptyQueue {};
 
+};
+
+// page 45 lecture 5
+class Queue::Iterator {
+    const Queue* queue;
+    int index;
+    Iterator(const Queue* queue, int index);
+    friend class Queue;
+public:
+    const int& operator*() const; //todo: ofir
+    Iterator& operator++(); //todo: ofir
+    Iterator operator++(int); //todo: alon
+    bool operator==(const Iterator& it) const;
+    bool operator!=(const Iterator& it) const; //todo: alon
+    Iterator(const Iterator&) = default; //todo: alon
+    Iterator& operator=(const Iterator&) = default; //todo: ofir
+    class InvalidOperation{};
 };
 
 
@@ -64,7 +79,6 @@ public:
 
 // todo: Queue filter(queue, condition):
 // return queue with filtered values by the described condition
-void front();
 //template<class T>
 //template<class Condition>
 typedef bool Condition; //todo: delete and replace with template?
@@ -81,18 +95,6 @@ Queue transform(Queue queue, Operation operation){
 
 }
 
-
-
-//
-//class String {
-//    int length;
-//    char* value;
-//public:	//...
-//    typedef char* iterator;
-//    typedef const char* const_iterator;	iterator begin() {		return value;	}
-//    const_iterator begin() const {		return value;	}
-//    iterator end() {		return value + length;	}
-//    const_iterator end() const {		return value + length;	}	//...};
 
 
 #endif //EX3_QUEUE_H

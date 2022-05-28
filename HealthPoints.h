@@ -1,27 +1,35 @@
 //
 // Created by User on 5/27/2022.
 //
+#include <fstream>
+using std::ifstream;
+using std::ofstream;
 
 #ifndef EX3_HEALTHPOINTS_H
 #define EX3_HEALTHPOINTS_H
 
-//todo build iterface implemantation in HealthPoints.cpp
+static const int HP_DEFAULT = 100;
+// todo: validate negative values
 class HealthPoints {
-    int m_length;
-    char *m_data;
-
-//    static char *allocateAndCopy(const char *data, int size);
+    int points;
+    int maxHp;
+    friend std::ostream& operator<<(std::ostream& os, const HealthPoints& r); //todo: alon
+    friend bool operator==(const HealthPoints&, const HealthPoints&);
+    friend bool operator<(const HealthPoints&, const HealthPoints&);
 
 public:
-    HealthPoints(const int hp); // String s1; or String s1 = "aa";
-//    HealthPoints(const HealthPoints &int); // String s2(s1); todo: this isnt the right syntax
-    ~HealthPoints();
+    HealthPoints(const int hp=HP_DEFAULT); //todo: alon
+    HealthPoints(const HealthPoints &hp_instance); // todo: ofir
+    ~HealthPoints(); // todo: ofir
+    explicit operator int() const; //todo: alon
+    HealthPoints &operator=(const HealthPoints &);
+    HealthPoints &operator-(const HealthPoints &); // todo: ofir
+    HealthPoints &operator-=(const HealthPoints &); // todo: ofir
+    HealthPoints &operator+(const HealthPoints &); //todo: alon
+    HealthPoints &operator+=(const HealthPoints &); //todo: alon
+    class InvalidArgument {}; //todo: alon
+};
 
-    HealthPoints &operator=(const HealthPoints &); // s1 = s2;
-    HealthPoints &operator-=(const HealthPoints &); // s1 = s2;
-    HealthPoints &operator+=(const HealthPoints &); // s1 = s2;
-    class InvalidArgument {};
-}
 
 
 #endif //EX3_HEALTHPOINTS_H
