@@ -19,15 +19,15 @@ class HealthPoints {
 
 public:
     HealthPoints(const int hp=HP_DEFAULT); //todo: alon
-    HealthPoints(const HealthPoints &hp_instance); // todo: ofir
-    ~HealthPoints(); // todo: ofir
+    HealthPoints(const HealthPoints &hp_instance)= default;
+    ~HealthPoints()= default;
+    HealthPoints &operator=(const HealthPoints &)= default;
     explicit operator int() const; //todo: alon
-    HealthPoints &operator=(const HealthPoints &);
     HealthPoints &operator-(const HealthPoints &); // todo: ofir
     HealthPoints &operator-=(const HealthPoints &); // todo: ofir
     HealthPoints &operator+(const HealthPoints &); //todo: alon
     HealthPoints &operator+=(const HealthPoints &); //todo: alon
-    class InvalidArgument {}; //todo: alon
+    class InvalidArgument {};
 };
 
 
