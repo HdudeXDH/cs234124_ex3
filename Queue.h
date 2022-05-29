@@ -46,9 +46,8 @@ Queue::Queue():
 T Queue::pushBack(const T &t) {
     Node *temp=new Node;
 //    if(temp==NULL){
-//        cout<<"Overflow"<<endl;
-//        return;
-//    } todo: check
+//        throw std::bad_alloc();
+//    } todo: validate
     temp->data=t;
     temp->next=NULL;
     tail=temp;
@@ -60,6 +59,7 @@ T Queue::pushBack(const T &t) {
 }
 Queue& Queue::operator=(const Queue&){
     Queue temp();
+    //todo:
 
 };
 
