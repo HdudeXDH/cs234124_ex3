@@ -1,19 +1,22 @@
 //
-// Created by Ofir Elyashiv & Alon Feldman
+// Created by ofir1 on 29-May-22.
 //
 
 #ifndef EX3_QUEUE_H
 #define EX3_QUEUE_H
+typedef int T
 
-// todo: check that support const queue and regular queue
-// todo: Queue template (can be used with T)
-// i just copied stack from tutorial 8 with iterator explanation from lecture 5 (page 41)
-// they suggested to build with:
-//typedef int T;// instead of :
-template <class T>
+struct Node{
+    T data;
+    Node *next;
+};
+
+
 class Queue {
 public:
-    explicit Queue(int maxSize = 100); //todo: ofir
+    Node *head,*tail;
+    int count;
+    Queue(); //todo: ofir
     Queue(const Queue& s); //todo: ofir
     ~Queue(); //todo: alon
     Queue& operator=(const Queue&); //todo: alon
@@ -26,114 +29,66 @@ public:
     // return the size of Queue
     int size(); //todo: ofir
     // Exception:
-    bool isEmpty();
-    bool isFull();
     class EmptyQueue {};
-private:
-    T* *array;
-    int maxSize;
-    int front;
-    int rear;
-    int count;
-    class Iterator;
-    Iterator begin() const;
-    Iterator end() const;
-
+    ~Queue();
 };
 
-template <class X>
-Queue<T>::Queue(int size)
+void Queue::insert(int n){
+    Node *temp=new Node;
+    if(temp==NULL){
+        cout<<"Overflow"<<endl;
+        return;
+    }
+    temp->data=n;
+    temp->next=NULL;
+
+    //for first node
+    if(front==NULL){
+        front=rear=temp;
+    }
+    else{
+        rear->next=temp;
+        rear=temp;
+    }
+    cout<<n<<" has been inserted successfully."<<endl;
+}
+
+void Queue::display(){
+    if(front==NULL){
+        cout<<"Underflow."<<endl;
+        return;
+    }
+    Node *temp=front;
+    //will check until NULL is not found
+    while(temp){
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+    cout<<endl;
+}
+
+void Queue :: deleteitem()
 {
-    arr = new T[size];
-    maxSize = size;
-    front = 0;
-    rear = -1;
-    count = 0;
+    if (front==NULL){
+        cout<<"underflow"<<endl;
+        return;
+    }
+
+    cout<<front->data<<" is being deleted "<<endl;
+    if(front==rear)//if only one node is there
+        front=rear=NULL;
+    else
+        front=front->next;
 }
 
-template <class T>
-Queue<T>::Queue(int maxSize) {
-
+Queue ::~Queue()
+{
+    while(front!=NULL)
+    {
+        Node *temp=front;
+        front=front->next;
+        delete temp;
+    }
+    rear=NULL;
 }
-
-template <class T>
-void Queue<T>::popFront() {
-
-}
-
-template <class T>
-int Queue<T>::size() {
-    return this->count;
-}
-
-
-template <class T>
-bool Queue<T>::isEmpty() {
-    return this->count == 0;
-}
-
-template <class T>
-bool Queue<T>::isFull() {
-    return this->count == this->maxSize;
-}
-
-
-// page 45 lecture 5
-class Queue::Iterator {
-    const Queue* queue;
-    int index;
-    Iterator(const Queue* queue, int index);
-    friend class Queue;
-public:
-    const int& operator*() const; //todo: ofir
-    Iterator& operator++(); //todo: ofir
-    Iterator operator++(int); //todo: alon
-    bool operator==(const Iterator& it) const;
-    bool operator!=(const Iterator& it) const; //todo: alon
-    Iterator(const Iterator&) = default; //todo: alon
-    Iterator& operator=(const Iterator&) = default; //todo: ofir
-    class InvalidOperation{};
-};
-//template <class T>
-//Stack<T>& Stack<T>::operator=(const Stack<T>& s) {
-//    if (this == &s) {
-//        return *this;
-//    }
-//    T* tempData = new T[s.maxSize];
-//    try {
-//        maxSize = s. maxSize;
-//        nextIndex = s.nextIndex;
-//        for (int i = 0; i < nextIndex; ++i) {
-//            data[i] = s.data[i];
-//        }
-//    } catch (…) {
-//        delete[] tempData;
-//        throw;
-//    }
-//    delete[] data;
-//    data = tempData;
-//    return *this;
-//}
-
-
-// todo: Queue filter(queue, condition):
-// return queue with filtered values by the described condition
-//template<class T>
-//template<class Condition>
-typedef bool Condition; //todo: delete and replace with template?
-Queue filter(Queue queue, Condition condition) {
-
-}
-//
-//// todo: Queue transform(queue, operation):
-//// take a queue and preforms "operation" on each element
-//template<class T>
-//template<class Operation>
-typedef bool Operation; //todo: delete and replace with template?
-Queue transform(Queue queue, Operation operation){
-
-}
-
-
-
 #endif //EX3_QUEUE_H
