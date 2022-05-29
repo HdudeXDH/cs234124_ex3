@@ -27,7 +27,7 @@ public:
     //Return the first item in Queue
     T& front();
     // Delete the first item in Queue
-    void popFront(); //todo: ofir
+    void popFront();
     // return the size of Queue
     int size(); //todo: ofir
     // Exception:
@@ -57,14 +57,10 @@ T Queue::pushBack(const T &t) {
     count++;
     return t;
 }
-Queue& Queue::operator=(const Queue&){
-    Queue temp();
-    //todo:
-
-};
 
 T& Queue::front() {
-    return this->head->data; //todo: maybe wrong &
+    T& temp = this->head->data;
+    return  temp; //todo: maybe wrong &
 }
 
 Queue ::~Queue()
@@ -78,71 +74,65 @@ Queue ::~Queue()
     tail=NULL;
 }
 
-
 // page 45 lecture 5
 class Queue::Iterator {
     const Queue* queue;
-    int index;
-    Iterator(const Queue* queue, int index);
+    Node* current_node;
+    Iterator(const Queue* queue,Node* position):
+    queue(queue),
+    current_node(position){};
     friend class Queue;
 public:
-    const int& operator*() const; //todo: ofir
-    Iterator& operator++(); //todo: ofir
-    Iterator operator++(int); //todo: alon
-    bool operator==(const Iterator& it) const;
-    bool operator!=(const Iterator& it) const; //todo: alon
-    Iterator(const Iterator&) = default; //todo: alon
-    Iterator& operator=(const Iterator&) = default; //todo: ofir
+    Iterator(const Iterator&) = default;
+    Iterator& operator=(const Iterator&) = default;
+
+    const T& operator*() const {
+        T& temp = this->current_node->data;
+        return temp;
+    };
+
+    Iterator& operator++() {
+        if (current_node==queue->tail) {
+            throw Iterator::InvalidOperation();
+        }
+        this->current_node = this->current_node->next;
+    };
+
+    bool operator==(const Iterator& it) const{
+        if (it.current_node==this->current_node){
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    bool operator!=(const Iterator& it) const{
+      bool equal = this==&it;
+      return not equal;
+    };
     class InvalidOperation{};
 };
+
+
+Queue::Iterator Queue::begin() const {
+    return Iterator(this, head);
+}
+Queue::Iterator Queue::end() const {
+    return Iterator(this, tail);
+}
+
+Queue& Queue::operator=(const Queue& queue){
+    Queue temp= Queue();
+    for (Queue::Iterator it = queue.begin(); it != queue.end(); ++it) {
+        temp.pushBack( *it);
+    }
+};
+
+Queue Queue(const Queue& s) {
+    Queue temp = s;
+    return temp;
+}
+//    Iterator operator++(int); //todo: alon
 #endif //EX3_QUEUE_H
 
 
-//void Queue::insert(int n){
-//    Node *temp=new Node;
-//    if(temp==NULL){
-//        cout<<"Overflow"<<endl;
-//        return;
-//    }
-//    temp->data=n;
-//    temp->next=NULL;
-//
-//    //for first node
-//    if(front==NULL){
-//        front=rear=temp;
-//    }
-//    else{
-//        rear->next=temp;
-//        rear=temp;
-//    }
-//    cout<<n<<" has been inserted successfully."<<endl;
-//}
-//
-//void Queue::display(){
-//    if(front==NULL){
-//        cout<<"Underflow."<<endl;
-//        return;
-//    }
-//    Node *temp=front;
-//    //will check until NULL is not found
-//    while(temp){
-//        cout<<temp->data<<" ";
-//        temp=temp->next;
-//    }
-//    cout<<endl;
-//}
-//
-//void Queue :: deleteitem()
-//{
-//    if (front==NULL){
-//        cout<<"underflow"<<endl;
-//        return;
-//    }
-//
-//    cout<<front->data<<" is being deleted "<<endl;
-//    if(front==rear)//if only one node is there
-//        front=rear=NULL;
-//    else
-//        front=front->next;
-//}
-//
