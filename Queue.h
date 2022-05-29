@@ -20,18 +20,21 @@ class Queue {
 public:
     Queue(); //todo: ofir
     Queue(const Queue& s); //todo: ofir
-    ~Queue(); //todo: alon
+    ~Queue();
     Queue& operator=(const Queue&); //todo: alon
     //Enters item to end of line, saves copy.
-    T pushBack(const T& t); //todo: alon
+    T pushBack(const T& t);
     //Return the first item in Queue
-    T& front(); //todo: alon
+    T& front();
     // Delete the first item in Queue
     void popFront(); //todo: ofir
     // return the size of Queue
     int size(); //todo: ofir
     // Exception:
     class EmptyQueue {};
+    class Iterator;
+    Iterator begin() const;
+    Iterator end() const;
 };
 
 Queue::Queue():
@@ -40,7 +43,29 @@ Queue::Queue():
     count(0){
 }
 
+T Queue::pushBack(const T &t) {
+    Node *temp=new Node;
+//    if(temp==NULL){
+//        cout<<"Overflow"<<endl;
+//        return;
+//    } todo: check
+    temp->data=t;
+    temp->next=NULL;
+    tail=temp;
+    if (count==0){
+        head=temp;
+    }
+    count++;
+    return t;
+}
+Queue& Queue::operator=(const Queue&){
+    Queue temp();
 
+};
+
+T& Queue::front() {
+    return this->head->data; //todo: maybe wrong &
+}
 
 Queue ::~Queue()
 {
@@ -52,6 +77,24 @@ Queue ::~Queue()
     }
     tail=NULL;
 }
+
+
+// page 45 lecture 5
+class Queue::Iterator {
+    const Queue* queue;
+    int index;
+    Iterator(const Queue* queue, int index);
+    friend class Queue;
+public:
+    const int& operator*() const; //todo: ofir
+    Iterator& operator++(); //todo: ofir
+    Iterator operator++(int); //todo: alon
+    bool operator==(const Iterator& it) const;
+    bool operator!=(const Iterator& it) const; //todo: alon
+    Iterator(const Iterator&) = default; //todo: alon
+    Iterator& operator=(const Iterator&) = default; //todo: ofir
+    class InvalidOperation{};
+};
 #endif //EX3_QUEUE_H
 
 
