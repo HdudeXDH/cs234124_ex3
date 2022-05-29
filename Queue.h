@@ -4,7 +4,9 @@
 
 #ifndef EX3_QUEUE_H
 #define EX3_QUEUE_H
-typedef int T
+typedef int T;
+//static const int NULL = 0;
+#include <iostream>
 
 struct Node{
     T data;
@@ -13,9 +15,9 @@ struct Node{
 
 
 class Queue {
-public:
-    Node *head,*tail;
     int count;
+    Node *head,*tail;
+public:
     Queue(); //todo: ofir
     Queue(const Queue& s); //todo: ofir
     ~Queue(); //todo: alon
@@ -30,65 +32,74 @@ public:
     int size(); //todo: ofir
     // Exception:
     class EmptyQueue {};
-    ~Queue();
 };
 
-void Queue::insert(int n){
-    Node *temp=new Node;
-    if(temp==NULL){
-        cout<<"Overflow"<<endl;
-        return;
-    }
-    temp->data=n;
-    temp->next=NULL;
-
-    //for first node
-    if(front==NULL){
-        front=rear=temp;
-    }
-    else{
-        rear->next=temp;
-        rear=temp;
-    }
-    cout<<n<<" has been inserted successfully."<<endl;
+Queue::Queue():
+    head(NULL),
+    tail(NULL),
+    count(0){
 }
 
-void Queue::display(){
-    if(front==NULL){
-        cout<<"Underflow."<<endl;
-        return;
-    }
-    Node *temp=front;
-    //will check until NULL is not found
-    while(temp){
-        cout<<temp->data<<" ";
-        temp=temp->next;
-    }
-    cout<<endl;
-}
 
-void Queue :: deleteitem()
-{
-    if (front==NULL){
-        cout<<"underflow"<<endl;
-        return;
-    }
-
-    cout<<front->data<<" is being deleted "<<endl;
-    if(front==rear)//if only one node is there
-        front=rear=NULL;
-    else
-        front=front->next;
-}
 
 Queue ::~Queue()
 {
-    while(front!=NULL)
+    while(head !=NULL)
     {
-        Node *temp=front;
-        front=front->next;
+        Node *temp=head;
+        head=head->next;
         delete temp;
     }
-    rear=NULL;
+    tail=NULL;
 }
 #endif //EX3_QUEUE_H
+
+
+//void Queue::insert(int n){
+//    Node *temp=new Node;
+//    if(temp==NULL){
+//        cout<<"Overflow"<<endl;
+//        return;
+//    }
+//    temp->data=n;
+//    temp->next=NULL;
+//
+//    //for first node
+//    if(front==NULL){
+//        front=rear=temp;
+//    }
+//    else{
+//        rear->next=temp;
+//        rear=temp;
+//    }
+//    cout<<n<<" has been inserted successfully."<<endl;
+//}
+//
+//void Queue::display(){
+//    if(front==NULL){
+//        cout<<"Underflow."<<endl;
+//        return;
+//    }
+//    Node *temp=front;
+//    //will check until NULL is not found
+//    while(temp){
+//        cout<<temp->data<<" ";
+//        temp=temp->next;
+//    }
+//    cout<<endl;
+//}
+//
+//void Queue :: deleteitem()
+//{
+//    if (front==NULL){
+//        cout<<"underflow"<<endl;
+//        return;
+//    }
+//
+//    cout<<front->data<<" is being deleted "<<endl;
+//    if(front==rear)//if only one node is there
+//        front=rear=NULL;
+//    else
+//        front=front->next;
+//}
+//
