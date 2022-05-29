@@ -70,10 +70,14 @@ T Queue::pushBack(const T &t) {
 //    } todo: validate
     temp->data=t;
     temp->next=NULL;
-    tail=temp;
+
     if (count==0){
         head=temp;
     }
+    else{
+        this->head->next=temp;
+    }
+    tail=temp;
     count++;
     return t;
 }
@@ -98,6 +102,7 @@ Queue& Queue::operator=(const Queue& queue){
     for (Queue::Iterator it = queue.begin(); it != queue.end(); ++it) {
         temp.pushBack( *it);
     }
+    return temp;
 };
 
 Queue::Queue(const Queue &s) {
@@ -105,6 +110,30 @@ Queue::Queue(const Queue &s) {
         pushBack( *it);
     }
 }
+
+
+//template <class T>
+int Queue::size() {
+    return this->count;
+}
+
+//template <class T>
+void Queue::popFront() {
+    if(this->count == 0) throw Queue::EmptyQueue();
+    if(this->head==this->tail) {
+        this->head = this->tail = NULL;
+        --count;
+    }
+    else {
+        Node *temp=this->head;
+        this->head=this->head->next;
+        delete temp;
+        --count;
+    }
+}
+
+/// Iterator Implementations:
+
 bool Queue::Iterator::operator!=(const Iterator& it) const{
     bool equal = this==&it;
     return not equal;
@@ -137,7 +166,15 @@ Queue::Iterator Queue::begin() const {
 Queue::Iterator Queue::end() const {
     return Iterator(this, tail);
 }
-
+typedef bool (*filter_funct)(T);
+Queue filter(const Queue& queue, filter_funct condition)
+{
+    Queue temp= Queue();
+    for (Queue::Iterator it = queue.begin(); it != queue.end(); ++it) {
+        if(filter_funct(*it)) temp.pushBack(*it);
+    }
+    return temp;
+}
 
 //    Iterator operator++(int); //todo: alon
 #endif //EX3_QUEUE_H

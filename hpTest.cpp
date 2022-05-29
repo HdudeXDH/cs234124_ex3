@@ -5,8 +5,10 @@
 using std::ifstream;
 using std::ofstream;
 #include "HealthPoints.h"
+#include "Queue.h"
 
-int main(){
+
+void hpChecks(){
     HealthPoints healthPoints3;
 
 
@@ -37,6 +39,35 @@ int main(){
     comparisonResult = (healthPoints1 < healthPoints2); /* returns false */
     healthPoints1 -= 50; /* now has 50 points out of 100 */
     comparisonResult = (healthPoints1 < healthPoints2); /* returns true */
+}
+
+void queueCheckInt(){
+    Queue queue1;
+    queue1.pushBack(1);
+    queue1.pushBack(2);
+
+    int front1 = queue1.front(); /* front1 equals 1 as its the first value */
+    queue1.front() = 3; /* queue1 content is: 3, 2 (left to right) */
+    front1 = queue1.front(); /* front1 now equals 3 */
+
+    queue1.popFront();
+
+    int size1 = queue1.size();
+    Queue q2 = queue1;
+    q2.pushBack(2);
+    bool t1 = q2.begin()==queue1.begin();
+    bool t2 = q2.end()==queue1.end();
+    queue1.popFront();
+    for (Queue::Iterator it = queue1.begin(); it != queue1.end(); ++it) {
+        T t =  *it;
+    }
+
+
+
+}
+
+int main(){
+    queueCheckInt();
 
 
 
