@@ -7,10 +7,10 @@ using std::ofstream;
 #include "HealthPoints.h"
 
 int main(){
-    HealthPoints healthPoints1;
+    HealthPoints healthPoints3;
 
 
-    HealthPoints healthPoints2 = HealthPoints(150);
+    HealthPoints healthPoints4 = HealthPoints(150);
 
     try {
         HealthPoints healthPoints3(-100);
@@ -19,11 +19,11 @@ int main(){
 
     }
 
-    healthPoints1 -= 20; /* now has 80 points out of 100 */
-    healthPoints1 +=100; /* now has 100 points out of 100 */
-    healthPoints1 -= 150; /* now has 0 points out of 100 */
-    healthPoints2 = healthPoints2 - 160; /* now has 0 points out of 150 */
-    healthPoints2 = 160 + healthPoints1; /* now has 100 out of 100 */
+    healthPoints3 -= 20; /* now has 80 points out of 100 */
+    healthPoints3 +=100; /* now has 100 points out of 100 */
+    healthPoints3 -= 150; /* now has 0 points out of 100 */
+    healthPoints4 = healthPoints4 - 160; /* now has 0 points out of 150 */
+    healthPoints4 = 160 + healthPoints3; /* now has 100 out of 100 */
 
 
     bool comparisonResult;
@@ -39,6 +39,5 @@ int main(){
     comparisonResult = (healthPoints1 < healthPoints2); /* returns true */
 
 
-    std::cout << healthPoints1 << ", " <<
 
 }
