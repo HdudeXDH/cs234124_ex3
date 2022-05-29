@@ -41,6 +41,14 @@ void hpChecks(){
     comparisonResult = (healthPoints1 < healthPoints2); /* returns true */
 }
 
+bool is2(T t){
+    bool res=t==2;
+    return res;
+}
+
+void funcT(T & som){
+    som=8;
+}
 void queueCheckInt(){
     Queue queue1;
     queue1.pushBack(1);
@@ -61,6 +69,16 @@ void queueCheckInt(){
     for (Queue::Iterator it = queue1.begin(); it != queue1.end(); ++it) {
         T t =  *it;
     }
+
+    queue1.pushBack(1);
+    queue1.pushBack(2);
+    transform(queue1,funcT);
+    q2.pushBack(1);
+    q2.pushBack(3);
+    Queue q5 = filter(q2, is2);
+    Queue q3 = queue1;
+
+
 
 
 
