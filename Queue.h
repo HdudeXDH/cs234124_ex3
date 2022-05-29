@@ -9,16 +9,9 @@
 // todo: Queue template (can be used with T)
 // i just copied stack from tutorial 8 with iterator explanation from lecture 5 (page 41)
 // they suggested to build with:
-typedef int T;// instead of :
-//template <class T>
+//typedef int T;// instead of :
+template <class T>
 class Queue {
-    T* data;
-    int maxSize;
-    int nextIndex; // maybe irrelevant
-    class Iterator;
-    Iterator begin() const;
-    Iterator end() const;
-
 public:
     explicit Queue(int maxSize = 100); //todo: ofir
     Queue(const Queue& s); //todo: ofir
@@ -33,9 +26,57 @@ public:
     // return the size of Queue
     int size(); //todo: ofir
     // Exception:
+    bool isEmpty();
+    bool isFull();
     class EmptyQueue {};
+private:
+    T* *array;
+    int maxSize;
+    int front;
+    int rear;
+    int count;
+    class Iterator;
+    Iterator begin() const;
+    Iterator end() const;
 
 };
+
+template <class X>
+Queue<T>::Queue(int size)
+{
+    arr = new T[size];
+    maxSize = size;
+    front = 0;
+    rear = -1;
+    count = 0;
+}
+
+template <class T>
+Queue<T>::Queue(int maxSize) {
+
+}
+
+template <class T>
+void Queue<T>::popFront() {
+
+}
+
+template <class T>
+int Queue<T>::size() {
+    return this->count;
+}
+
+
+template <class T>
+bool Queue<T>::isEmpty() {
+    return this->count == 0;
+}
+
+template <class T>
+bool Queue<T>::isFull() {
+    return this->count == this->maxSize;
+}
+
 
 // page 45 lecture 5
 class Queue::Iterator {
@@ -53,8 +94,6 @@ public:
     Iterator& operator=(const Iterator&) = default; //todo: ofir
     class InvalidOperation{};
 };
-
-
 //template <class T>
 //Stack<T>& Stack<T>::operator=(const Stack<T>& s) {
 //    if (this == &s) {

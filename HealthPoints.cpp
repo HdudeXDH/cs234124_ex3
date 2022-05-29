@@ -32,11 +32,11 @@ bool operator<=(const HealthPoints& hp1, const HealthPoints& hp2){
     return  hp2>=hp1;
 };
 
-//todo: != should work too
+
 bool operator==(const HealthPoints& hp1, const HealthPoints& hp2) {
     return hp1.m_points == hp2.m_points ;
 }
-//todo: check if >,<=,>= needed also?
+
 bool operator<(const HealthPoints& hp1, const HealthPoints& hp2) {
     return hp1.m_points < hp2.m_points;
 }
@@ -53,7 +53,7 @@ HealthPoints& HealthPoints::operator+=(const int points){
     return *this;
 }
 
-HealthPoints operator+(const HealthPoints& hp1, const int points){
+HealthPoints operator+(const int points, const HealthPoints& hp1){
     HealthPoints temp_hp = hp1;
     temp_hp += points;
     return temp_hp;
