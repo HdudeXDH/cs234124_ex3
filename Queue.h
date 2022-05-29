@@ -37,10 +37,30 @@ public:
     Iterator end() const;
 };
 
+// page 45 lecture 5
+class Queue::Iterator {
+    const Queue* queue;
+    Node* current_node;
+    Iterator(const Queue* queue,Node* position):
+    queue(queue),
+    current_node(position){
+    };
+    friend class Queue;
+public:
+    Iterator(const Iterator&) = default;
+    Iterator& operator=(const Iterator&) = default;
+    const T& operator*() const;
+    Iterator& operator++();
+    bool operator==(const Iterator& it) const;
+    bool operator!=(const Iterator& it) const;
+    class InvalidOperation{};
+};
+
+
 Queue::Queue():
-    head(NULL),
-    tail(NULL),
-    count(0){
+        head(NULL),
+        tail(NULL),
+        count(0){
 }
 
 T Queue::pushBack(const T &t) {
@@ -73,46 +93,43 @@ Queue ::~Queue()
     }
     tail=NULL;
 }
-
-// page 45 lecture 5
-class Queue::Iterator {
-    const Queue* queue;
-    Node* current_node;
-    Iterator(const Queue* queue,Node* position):
-    queue(queue),
-    current_node(position){};
-    friend class Queue;
-public:
-    Iterator(const Iterator&) = default;
-    Iterator& operator=(const Iterator&) = default;
-
-    const T& operator*() const {
-        T& temp = this->current_node->data;
-        return temp;
-    };
-
-    Iterator& operator++() {
-        if (current_node==queue->tail) {
-            throw Iterator::InvalidOperation();
-        }
-        this->current_node = this->current_node->next;
-    };
-
-    bool operator==(const Iterator& it) const{
-        if (it.current_node==this->current_node){
-            return true;
-        }
-        else {
-            return false;
-        }
-    };
-    bool operator!=(const Iterator& it) const{
-      bool equal = this==&it;
-      return not equal;
-    };
-    class InvalidOperation{};
+Queue& Queue::operator=(const Queue& queue){
+    Queue temp= Queue();
+    for (Queue::Iterator it = queue.begin(); it != queue.end(); ++it) {
+        temp.pushBack( *it);
+    }
 };
 
+Queue::Queue(const Queue &s) {
+    for (Queue::Iterator it = s.begin(); it != s.end(); ++it) {
+        pushBack( *it);
+    }
+}
+bool Queue::Iterator::operator!=(const Iterator& it) const{
+    bool equal = this==&it;
+    return not equal;
+};
+bool Queue::Iterator::operator==(const Iterator& it) const{
+    if (it.current_node==this->current_node){
+        return true;
+    }
+    else {
+        return false;
+    }
+};
+
+Queue::Iterator& Queue::Iterator::operator++() {
+    if (current_node==queue->tail) {
+        throw Iterator::InvalidOperation();
+    }
+    this->current_node = this->current_node->next;
+};
+
+
+const T& Queue::Iterator::operator*() const {
+    T& temp = this->current_node->data;
+    return temp;
+};
 
 Queue::Iterator Queue::begin() const {
     return Iterator(this, head);
@@ -121,17 +138,7 @@ Queue::Iterator Queue::end() const {
     return Iterator(this, tail);
 }
 
-Queue& Queue::operator=(const Queue& queue){
-    Queue temp= Queue();
-    for (Queue::Iterator it = queue.begin(); it != queue.end(); ++it) {
-        temp.pushBack( *it);
-    }
-};
 
-Queue Queue(const Queue& s) {
-    Queue temp = s;
-    return temp;
-}
 //    Iterator operator++(int); //todo: alon
 #endif //EX3_QUEUE_H
 
