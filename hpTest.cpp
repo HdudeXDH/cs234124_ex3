@@ -75,8 +75,10 @@ void queueCheckInt(){
     transform(queue1,funcT);
     q2.pushBack(1);
     q2.pushBack(3);
+//    Queue q5;
     Queue q5 = filter(q2, is2);
-    Queue q3 = queue1;
+//    Queue q3 = queue1;
+    Queue q6(q2);
 
 
 

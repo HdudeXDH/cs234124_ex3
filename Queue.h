@@ -58,7 +58,6 @@ public:
     bool operator==(const Iterator& it) const;
     bool operator!=(const Iterator& it) const;
     class InvalidOperation{};
-
 };
 
 
@@ -89,7 +88,7 @@ void Queue::pushBack(const T &t) {
 
 T& Queue::front() {
     T& temp = this->head->data;
-    return temp; //todo: maybe wrong &
+    return temp;
 }
 
 Queue ::~Queue()
@@ -103,19 +102,19 @@ Queue ::~Queue()
     tail=NULL;
 }
 Queue& Queue::operator=(const Queue& queue){
-    Queue temp= Queue();
+//    Queue temp= Queue();
     for (Queue::Iterator it = queue.begin(); it != queue.end(); ++it) {
-        temp.pushBack( *it);
+        this->pushBack( *it);
     }
-    return temp;
+    return *this;
 };
 
-Queue::Queue(const Queue &s) {
+Queue::Queue(const Queue &s) :
+    count(0),
+    head(NULL),
+    tail(NULL)
+    {
     for (Queue::Iterator it = s.begin(); it != s.end(); ++it) {
-        bool ofir2 = it != s.end();
-        Queue::Iterator temp = s.end();
-        bool ofir = it==s.end();
-
         pushBack( *it);
     }
 }
@@ -183,13 +182,13 @@ Queue::Iterator Queue::end() const {
 typedef bool (*filter_funct)(T);
 Queue & filter(const Queue& queue, filter_funct condition)
 {
-    Queue temp= Queue();
+    Queue *temp= new Queue();
     for (Queue::Iterator it = queue.begin(); it != queue.end(); ++it) {
         if (condition(*it)) {
-            temp.pushBack( *it);
+            (*temp).pushBack( *it);
         }
     }
-    return temp;
+    return *temp;
 }
 
 
