@@ -60,6 +60,13 @@ TEST_CASE("HealthBasics")
         REQUIRE(hp3 == 100);
 
 
+//        try{HealthPoints a = -2;
+//            std::cout << a;
+//        }
+//        catch (HealthPoints::InvalidArgument & e){
+//            std::cout << "success alon!";
+//            throw;
+//        }
         REQUIRE_THROWS_AS(HealthPoints(0), HealthPoints::InvalidArgument);
         REQUIRE_THROWS_AS(HealthPoints(-2), HealthPoints::InvalidArgument);
     }

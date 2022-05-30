@@ -1,17 +1,14 @@
-//
-// Created by User on 5/27/2022.
-//
 #include <fstream>
 #include <iostream>
-using std::ifstream;
-using std::ofstream;
 
 #ifndef EX3_HEALTHPOINTS_H
 #define EX3_HEALTHPOINTS_H
 
+using std::ifstream;
+using std::ofstream;
+
+//healthPoint object for Mtmchkin
 class HealthPoints {
-//todo: explicit
-//todo: hp = -101 => Error
 public:
     HealthPoints(const int hp=HP_DEFAULT);
     HealthPoints(const HealthPoints &hp_instance)= default;
@@ -20,6 +17,7 @@ public:
     HealthPoints &operator-=(const int points);
     HealthPoints &operator+=(const int points);
     class InvalidArgument {};
+    explicit operator int() const;
 
 private:
     static const int HP_DEFAULT = 100;

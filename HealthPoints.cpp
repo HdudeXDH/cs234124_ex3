@@ -1,7 +1,3 @@
-//
-// Created by User on 5/27/2022.
-//
-
 #include "HealthPoints.h"
 
 HealthPoints::HealthPoints(const int hp):
@@ -12,8 +8,6 @@ HealthPoints::HealthPoints(const int hp):
     }
 
 }
-
-
 
 bool operator!=(const HealthPoints& hp1, const HealthPoints& hp2){
     bool equal = hp1==hp2;
@@ -52,7 +46,8 @@ HealthPoints& HealthPoints::operator+=(const int points){
     if (points<0) {
         return *this -= (-points);
     }
-    if((this->m_points + points) >= this->m_maxHp) this->m_points = this->m_maxHp;
+    if((this->m_points + points) >= this->m_maxHp) {
+        this->m_points = this->m_maxHp;}
     else this->m_points += points;
     return *this;
 }
@@ -73,8 +68,8 @@ HealthPoints& HealthPoints::operator-=(const int points){
     if (points<0) {
         return *this += (-points);
     }
-    if((this->m_points - points) <= 0) this->m_points = 0;
-    else this->m_points -= points;
+    if((this->m_points - points) <= 0) {this->m_points = 0;}
+    else {this->m_points -= points;}
     return *this;
 }
 
