@@ -121,6 +121,9 @@ void Queue<T>::pushBack(const T &t) {
 
 template<class T>
 T& Queue<T>::front() {
+    if (this->count==0) {
+        throw Queue<T>::EmptyQueue();
+    }
     T& temp = this->head->data;
     return temp;
 }
