@@ -29,9 +29,10 @@ private:
     friend bool operator<(const HealthPoints& hp1, const HealthPoints& hp2);
 };
 
+HealthPoints operator-(const int points, const HealthPoints& hp1);
 HealthPoints operator-(const HealthPoints& hp1, const int points);
 HealthPoints operator+(const int points, const HealthPoints& hp1);
-
+HealthPoints operator+(const HealthPoints& hp1, const int points);
 
 bool operator!=(const HealthPoints& hp1, const HealthPoints& hp2);
 bool operator>=(const HealthPoints& hp1, const HealthPoints& hp2);

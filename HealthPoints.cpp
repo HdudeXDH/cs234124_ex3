@@ -59,6 +59,12 @@ HealthPoints operator+(const int points, const HealthPoints& hp1){
     temp_hp += points;
     return temp_hp;
 }
+HealthPoints operator+(const HealthPoints& hp1, const int points){
+    HealthPoints temp_hp = hp1;
+    temp_hp += points;
+    return temp_hp;
+}
+
 
 HealthPoints& HealthPoints::operator-=(const int points){
     if((this->m_points - points) <= 0) this->m_points = 0;
@@ -67,6 +73,12 @@ HealthPoints& HealthPoints::operator-=(const int points){
 }
 
 HealthPoints operator-(const HealthPoints& hp1, const int points){
+    HealthPoints temp_hp = hp1;
+    temp_hp -= points;
+    return temp_hp;
+}
+
+HealthPoints operator-(const int points, const HealthPoints& hp1){
     HealthPoints temp_hp = hp1;
     temp_hp -= points;
     return temp_hp;
