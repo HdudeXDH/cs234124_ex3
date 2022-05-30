@@ -119,6 +119,7 @@ void Queue<T>::pushBack(const T &t) {
     }
     tail=temp;
     count++;
+
 //    return t;
 }
 
@@ -240,15 +241,15 @@ T& Queue<T>::Iterator::operator*() const {
 
 
 template<class T,typename filter_funct>
-Queue<T> & filter(const Queue<T>& queue, filter_funct condition)
+Queue<T>  filter(const Queue<T>& queue, filter_funct condition)
 {
-    Queue<T> *temp= new Queue<T>();
+    Queue<T> temp= Queue<T>();
     for (typename Queue<T>::ConstIterator it = queue.begin(); it != queue.end(); ++it) {
         if (condition(*it)) {
-            (*temp).pushBack( *it);
+            temp.pushBack( *it);
         }
     }
-    return *temp;
+    return temp;
 }
 
 template<class T,typename transform_func>
