@@ -4,27 +4,34 @@
 
 #ifndef EX3_QUEUE_H
 #define EX3_QUEUE_H
-typedef int T;
+//typedef int T;
 //static const int NULL = 0;
 #include <iostream>
-typedef void (*transform_func)(T&); //todo: validate
 
+//template<class T>
+//template<class T,typename transform_func>
+//typedef void (*transform_func)(T&);
+//
+//template<class T, filter_funct>
+//typename bool (*filter_funct)(T);
 
+template<class T>
 struct Node{
     T data;
     Node *next;
 };
 
-
+template<class T>
 class Queue {
     int count;
-    Node *head,*tail;
+    Node<T> *head,*tail;
+    template<class transform_func>
     friend void transform(Queue& queue, transform_func func);
 public:
-    Queue(); //todo: ofir
-    Queue(const Queue& s); //todo: ofir
+    Queue();
+    Queue(const Queue& s);
     ~Queue();
-    Queue& operator=(const Queue&); //todo: alon
+    Queue& operator=(const Queue&);
     //Enters item to end of line, saves copy.
     void pushBack(const T& t);
     //Return the first item in Queue
@@ -32,7 +39,7 @@ public:
     // Delete the first item in Queue
     void popFront();
     // return the size of Queue
-    int size(); //todo: ofir
+    int size();
     // Exception:
     class EmptyQueue {};
     class Iterator;
@@ -40,11 +47,11 @@ public:
     Iterator end() const;
 };
 
-// page 45 lecture 5
-class Queue::Iterator {
+template<class T>
+class Queue<T>::Iterator {
     const Queue* queue;
-    Node* current_node;
-    Iterator(const Queue* queue,Node* position):
+    Node<T>* current_node;
+    Iterator(const Queue* queue,Node<T>* position):
     queue(queue),
     current_node(position){
     };
@@ -60,15 +67,16 @@ public:
     class InvalidOperation{};
 };
 
-
-Queue::Queue():
+template<class T>
+Queue<T>::Queue():
         head(NULL),
         tail(NULL),
         count(0){
 }
 
-void Queue::pushBack(const T &t) {
-    Node *temp=new Node;
+template<class T>
+void Queue<T>::pushBack(const T &t) {
+    Node<T> *temp=new Node<T>;
 //    if(temp==NULL){
 //        throw std::bad_alloc();
 //    } todo: validate
@@ -86,30 +94,35 @@ void Queue::pushBack(const T &t) {
 //    return t;
 }
 
-T& Queue::front() {
+template<class T>
+T& Queue<T>::front() {
     T& temp = this->head->data;
     return temp;
 }
 
-Queue ::~Queue()
+template<class T>
+Queue<T> ::~Queue()
 {
     while(head !=NULL)
     {
-        Node *temp=head;
+        Node<T> *temp=head;
         head=head->next;
         delete temp;
     }
     tail=NULL;
 }
-Queue& Queue::operator=(const Queue& queue){
-//    Queue temp= Queue();
+
+template<class T>
+Queue<T>& Queue<T>::operator=(const Queue<T>& queue){
+    Queue temp= Queue();
     for (Queue::Iterator it = queue.begin(); it != queue.end(); ++it) {
         this->pushBack( *it);
     }
     return *this;
 };
 
-Queue::Queue(const Queue &s) :
+template<class T>
+Queue<T>::Queue(const Queue<T> &s) :
     count(0),
     head(NULL),
     tail(NULL)
@@ -120,20 +133,20 @@ Queue::Queue(const Queue &s) :
 }
 
 
-//template <class T>
-int Queue::size() {
+template<class T>
+int Queue<T>::size() {
     return this->count;
 }
 
-//template <class T>
-void Queue::popFront() {
+template<class T>
+void Queue<T>::popFront() {
     if(this->count == 0) throw Queue::EmptyQueue();
     if(this->head==this->tail) {
         this->head = this->tail = NULL;
         --count;
     }
     else {
-        Node *temp=this->head;
+        Node<T> *temp=this->head;
         this->head=this->head->next;
         delete temp;
         --count;
@@ -142,11 +155,14 @@ void Queue::popFront() {
 
 /// Iterator Implementations:
 
-bool Queue::Iterator::operator!=(const Iterator& it) const{
+template<class T>
+bool Queue<T>::Iterator::operator!=(const Iterator& it) const{
     bool equal = *this==it;
     return not equal;
 };
-bool Queue::Iterator::operator==(const Iterator& it) const{
+
+template<class T>
+bool Queue<T>::Iterator::operator==(const Iterator& it) const{
     if (it.current_node==this->current_node){
         return true;
     }
@@ -155,35 +171,42 @@ bool Queue::Iterator::operator==(const Iterator& it) const{
     }
 };
 
-Queue::Iterator& Queue::Iterator::operator++() {
+template<class T>
+typename Queue<T>::Iterator& Queue<T>::Iterator::operator++() {
     if (current_node==NULL) {
         throw Iterator::InvalidOperation();
     }
     this->current_node = this->current_node->next;
-};
+}
 
-
-const T& Queue::Iterator::operator*() const {
+template<class T>
+const T& Queue<T>::Iterator::operator*() const {
     T& temp = this->current_node->data;
     return temp;
-};
+}
 
 //T& Queue::Iterator::operator*() const {
 //    T& temp = this->current_node->data;
 //    return temp;
 //};
 
-Queue::Iterator Queue::begin() const {
+template<class T>
+typename Queue<T>::Iterator Queue<T>::begin() const {
     return Iterator(this, head);
 }
-Queue::Iterator Queue::end() const {
+
+template<class T>
+typename Queue<T>::Iterator Queue<T>::end() const {
     return Iterator(this, NULL);
 }
-typedef bool (*filter_funct)(T);
-Queue & filter(const Queue& queue, filter_funct condition)
+
+
+
+template<class T,typename filter_funct>
+Queue<T> & filter(const Queue<T>& queue, filter_funct condition)
 {
-    Queue *temp= new Queue();
-    for (Queue::Iterator it = queue.begin(); it != queue.end(); ++it) {
+    Queue<T> *temp= new Queue<T>();
+    for (typename Queue<T>::Iterator it = queue.begin(); it != queue.end(); ++it) {
         if (condition(*it)) {
             (*temp).pushBack( *it);
         }
@@ -191,16 +214,15 @@ Queue & filter(const Queue& queue, filter_funct condition)
     return *temp;
 }
 
-
-void transform(Queue& queue, transform_func func)
+template<class T,typename transform_func>
+void transform(Queue<T>& queue, transform_func func)
 {
-    Node * position = queue.head;
+    Node<T> * position = queue.head;
     while(position!=NULL){
         func(position->data);
         position= position->next;
     }
 }
-//    Iterator operator++(int); //todo: alon
 #endif //EX3_QUEUE_H
 
 

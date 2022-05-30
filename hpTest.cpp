@@ -9,7 +9,7 @@ using std::ofstream;
 
 
 void hpChecks(){
-    HealthPoints healthPoints3;
+    HealthPoints healthPoints3 = 50;
 
 
     HealthPoints healthPoints4 = HealthPoints(150);
@@ -25,7 +25,7 @@ void hpChecks(){
     healthPoints3 +=100; /* now has 100 points out of 100 */
     healthPoints3 -= 150; /* now has 0 points out of 100 */
     healthPoints4 = healthPoints4 - 160; /* now has 0 points out of 150 */
-    healthPoints4 = 160 + healthPoints3; /* now has 100 out of 100 */
+    healthPoints4 = healthPoints3 + 160; /* now has 100 out of 100 */
 
 
     bool comparisonResult;
@@ -41,16 +41,16 @@ void hpChecks(){
     comparisonResult = (healthPoints1 < healthPoints2); /* returns true */
 }
 
-bool is2(T t){
+bool is2(int t){
     bool res=t==2;
     return res;
 }
 
-void funcT(T & som){
+void funcT(int & som){
     som=8;
 }
 void queueCheckInt(){
-    Queue queue1;
+    Queue<int> queue1;
     queue1.pushBack(1);
     queue1.pushBack(2);
 
@@ -61,13 +61,14 @@ void queueCheckInt(){
     queue1.popFront();
 
     int size1 = queue1.size();
-    Queue q2 = queue1;
+    Queue<int> q2;
+    q2 = queue1;
     q2.pushBack(2);
     bool t1 = q2.begin()==queue1.begin();
     bool t2 = q2.end()==queue1.end();
     queue1.popFront();
-    for (Queue::Iterator it = queue1.begin(); it != queue1.end(); ++it) {
-        T t =  *it;
+    for (Queue<int>::Iterator it = queue1.begin(); it != queue1.end(); ++it) {
+        int t =  *it;
     }
 
     queue1.pushBack(1);
@@ -76,9 +77,9 @@ void queueCheckInt(){
     q2.pushBack(1);
     q2.pushBack(3);
 //    Queue q5;
-    Queue q5 = filter(q2, is2);
+    Queue<int> q5 = filter(q2, is2);
 //    Queue q3 = queue1;
-    Queue q6(q2);
+    Queue<int> q6(q2);
 
 
 
