@@ -151,7 +151,7 @@ Queue<T>& Queue<T>::operator=(const Queue<T>& queue){
     try {
         for (Queue::ConstIterator it = queue.begin(); it != queue.end(); ++it) {
             this->pushBack( *it);
-        };
+        }
     }
     catch (const std::bad_alloc& e) {
         while(count>0){
