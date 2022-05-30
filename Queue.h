@@ -4,19 +4,19 @@
 
 #include <iostream>
 
-//Node Struct for linked list
+//Node Struct for linked list:
 template<class T>
 struct Node{
     T data;
     Node *next;
 };
 
-// Queue Class interface
+// Queue Class interface:
 template<class T>
 class Queue {
     int m_count;
-    Node<T> *head;
-    Node<T> *tail;
+    Node<T> *m_head;
+    Node<T> *m_tail;
 public:
     Queue();
     Queue(const Queue& s);
@@ -34,11 +34,11 @@ public:
     class EmptyQueue {};
     //Iterator
     class Iterator;
-    Iterator begin() {return Iterator(this, head);};
+    Iterator begin() {return Iterator(this, m_head);};
     Iterator end() {return Iterator(this, NULL);};
     //Const Iterator
     class ConstIterator;
-    ConstIterator begin() const {return ConstIterator(this, head); };
+    ConstIterator begin() const {return ConstIterator(this, m_head); };
     ConstIterator end() const {return ConstIterator(this, NULL);
     };
 
@@ -48,10 +48,10 @@ public:
 template<class T>
 class Queue<T>::Iterator {
     const Queue* queue;
-    Node<T>* current_node;
+    Node<T>* m_currentNode;
     Iterator(const Queue* queue,Node<T>* position):
     queue(queue),
-    current_node(position){
+    m_currentNode(position){
     };
     friend class Queue;
 public:
@@ -68,8 +68,8 @@ public:
 template<class T>
 Queue<T>::Queue():
         m_count(0),
-        head(NULL),
-        tail(NULL)
+        m_head(NULL),
+        m_tail(NULL)
         {
 }
 
@@ -86,12 +86,12 @@ void Queue<T>::pushBack(const T &t) {
     temp->next=NULL;
 
     if (m_count==0){
-        head=temp;
+        m_head=temp;
     }
     else{
-        this->tail->next=temp;
+        this->m_tail->next=temp;
     }
-    tail=temp;
+    m_tail=temp;
     m_count++;
 }
 
@@ -100,20 +100,20 @@ T& Queue<T>::front() const {
     if (this->m_count==0) {
         throw Queue<T>::EmptyQueue();
     }
-    T& temp = this->head->data;
+    T& temp = this->m_head->data;
     return temp;
 }
 
 template<class T>
 Queue<T> ::~Queue()
 {
-    while(head !=NULL)
+    while(m_head !=NULL)
     {
-        Node<T> *temp=head;
-        head=head->next;
+        Node<T> *temp=m_head;
+        m_head=m_head->next;
         delete temp;
     }
-    tail=NULL;
+    m_tail=NULL;
 }
 
 template<class T>
@@ -140,8 +140,8 @@ Queue<T>& Queue<T>::operator=(const Queue<T>& queue){
 template<class T>
 Queue<T>::Queue(const Queue<T> &s) :
     m_count(0),
-    head(NULL),
-    tail(NULL)
+    m_head(NULL),
+    m_tail(NULL)
     {
     try{
         for (Queue::ConstIterator it = s.begin(); it != s.end(); ++it) {
@@ -164,15 +164,15 @@ int Queue<T>::size() const {
 template<class T>
 void Queue<T>::popFront() {
     if(this->m_count == 0) throw Queue::EmptyQueue();
-    if(this->head==this->tail) {
-        Node<T> *temp=this->head;
+    if(this->m_head==this->m_tail) {
+        Node<T> *temp=this->m_head;
         delete temp;
-        this->head = this->tail = NULL;
+        this->m_head = this->m_tail = NULL;
         --m_count;
     }
     else {
-        Node<T> *temp=this->head;
-        this->head=this->head->next;
+        Node<T> *temp=this->m_head;
+        this->m_head=this->m_head->next;
         delete temp;
         --m_count;
     }
@@ -188,7 +188,7 @@ bool Queue<T>::Iterator::operator!=(const Iterator& it) const{
 
 template<class T>
 bool Queue<T>::Iterator::operator==(const Iterator& it) const{
-    if (it.current_node==this->current_node){
+    if (it.m_currentNode==this->m_currentNode){
         return true;
     }
     else {
@@ -198,17 +198,17 @@ bool Queue<T>::Iterator::operator==(const Iterator& it) const{
 
 template<class T>
 typename Queue<T>::Iterator& Queue<T>::Iterator::operator++() {
-    if (current_node==NULL) {
+    if (m_currentNode==NULL) {
         throw Iterator::InvalidOperation();
     }
-    this->current_node = this->current_node->next;
+    this->m_currentNode = this->m_currentNode->next;
     return *this;
 }
 
 
 template<class T>
 T& Queue<T>::Iterator::operator*() const {
-    T& temp = this->current_node->data;
+    T& temp = this->m_currentNode->data;
     return temp;
 }
 
@@ -237,10 +237,10 @@ void transform(Queue<T>& queue, transform_func func)
 template<class T>
 class Queue<T>::ConstIterator {
     const Queue* queue;
-    Node<T>* current_node;
+    Node<T>* m_currentNode;
     ConstIterator(const Queue* queue,Node<T>* position):
             queue(queue),
-            current_node(position){
+            m_currentNode(position){
     };
     friend class Queue;
 public:
@@ -256,7 +256,7 @@ public:
 
 template<class T>
 const T& Queue<T>::ConstIterator::operator*() const {
-    T& temp = this->current_node->data;
+    T& temp = this->m_currentNode->data;
     return temp;
 }
 
@@ -268,7 +268,7 @@ bool Queue<T>::ConstIterator::operator!=(const ConstIterator& it) const{
 
 template<class T>
 bool Queue<T>::ConstIterator::operator==(const ConstIterator& it) const{
-    if (it.current_node==this->current_node){
+    if (it.m_currentNode==this->m_currentNode){
         return true;
     }
     else {
@@ -278,10 +278,10 @@ bool Queue<T>::ConstIterator::operator==(const ConstIterator& it) const{
 
 template<class T>
 typename Queue<T>::ConstIterator& Queue<T>::ConstIterator::operator++() {
-    if (current_node==NULL) {
+    if (m_currentNode==NULL) {
         throw ConstIterator::InvalidOperation();
     }
-    this->current_node = this->current_node->next;
+    this->m_currentNode = this->m_currentNode->next;
     return *this;
 }
 #endif //EX3_QUEUE_H
