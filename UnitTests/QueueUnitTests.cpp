@@ -415,7 +415,6 @@ TEST_CASE("Queue Advanced")
         REQUIRE(result == expected);
 
         readQueue(result, healthyQ);
-        cout << result;
         filterHealthQ = filter(healthyQ, isGreaterThen7);
 
         readQueue(result, filterHealthQ);

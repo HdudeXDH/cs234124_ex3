@@ -15,6 +15,7 @@
 //template<class T, filter_funct>
 //typename bool (*filter_funct)(T);
 
+//todo: memory exception handling
 template<class T>
 struct Node{
     T data;

@@ -11,6 +11,7 @@ using std::ofstream;
 
 class HealthPoints {
 //todo: explicit
+//todo: hp = -101 => Error
 public:
     HealthPoints(const int hp=HP_DEFAULT);
     HealthPoints(const HealthPoints &hp_instance)= default;
