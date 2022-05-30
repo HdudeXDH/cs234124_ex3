@@ -95,30 +95,30 @@ bool testExceptions()
 	return testResult;
 }
 
-bool testConstQueue()
-{
-	bool testResult = true;
-
-	Queue<int> queue5;
-	for (int i = 1; i <= 5; i++) {
-		queue5.pushBack(42);
-	}
-	const Queue<int> constQueue = queue5;
-	for (Queue<int>::ConstIterator i = constQueue.begin(); i != constQueue.end(); ++i) {
-		AGREGATE_TEST_RESULT(testResult, (*i == 42));
-	}
-
-	bool exceptionThrown = false;
-	Queue<int>::ConstIterator endConstIterator = constQueue.end();
-	try {
-		++endConstIterator;
-	}
-	catch (Queue<int>::ConstIterator::InvalidOperation& e) {
-		exceptionThrown = true;
-	}
-	AGREGATE_TEST_RESULT(testResult, exceptionThrown);
-
-	return testResult;
-}
+//bool testConstQueue()
+//{
+//	bool testResult = true;
+//
+//	Queue<int> queue5;
+//	for (int i = 1; i <= 5; i++) {
+//		queue5.pushBack(42);
+//	}
+//	const Queue<int> constQueue = queue5;
+//	for (Queue<int>::ConstIterator i = constQueue.begin(); i != constQueue.end(); ++i) {
+//		AGREGATE_TEST_RESULT(testResult, (*i == 42));
+//	}
+//
+//	bool exceptionThrown = false;
+//	Queue<int>::ConstIterator endConstIterator = constQueue.end();
+//	try {
+//		++endConstIterator;
+//	}
+//	catch (Queue<int>::ConstIterator::InvalidOperation& e) {
+//		exceptionThrown = true;
+//	}
+//	AGREGATE_TEST_RESULT(testResult, exceptionThrown);
+//
+//	return testResult;
+//}
 
 }
