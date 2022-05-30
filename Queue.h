@@ -105,6 +105,7 @@ Queue<T>::Queue():
 template<class T>
 void Queue<T>::pushBack(const T &t) {
     Node<T> *temp=new Node<T>;
+    //Node<T> *temp=new Node<T>;
 //    if(temp==NULL){
 //        throw std::bad_alloc();
 //    } todo: validate
@@ -174,6 +175,8 @@ template<class T>
 void Queue<T>::popFront() {
     if(this->count == 0) throw Queue::EmptyQueue();
     if(this->head==this->tail) {
+        Node<T> *temp=this->head;
+        delete temp;
         this->head = this->tail = NULL;
         --count;
     }

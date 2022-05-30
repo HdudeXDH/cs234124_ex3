@@ -10,7 +10,7 @@ using std::ofstream;
 #define EX3_HEALTHPOINTS_H
 
 class HealthPoints {
-
+//todo: explicit
 public:
     HealthPoints(const int hp=HP_DEFAULT);
     HealthPoints(const HealthPoints &hp_instance)= default;
