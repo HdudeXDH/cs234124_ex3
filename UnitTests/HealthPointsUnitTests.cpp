@@ -4,7 +4,7 @@
 #include <iostream>
 #include "catch.hpp"
 #include "relativeIncludes.h"
-
+#include <sstream>
 
 enum BOOL_OPERATORS {
     EQUAL,

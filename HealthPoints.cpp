@@ -49,6 +49,9 @@ std::ostream& operator<<(std::ostream& os, const HealthPoints& hp1) {
 }
 
 HealthPoints& HealthPoints::operator+=(const int points){
+    if (points<0) {
+        return *this -= (-points);
+    }
     if((this->m_points + points) >= this->m_maxHp) this->m_points = this->m_maxHp;
     else this->m_points += points;
     return *this;
@@ -67,6 +70,9 @@ HealthPoints operator+(const HealthPoints& hp1, const int points){
 
 
 HealthPoints& HealthPoints::operator-=(const int points){
+    if (points<0) {
+        return *this += (-points);
+    }
     if((this->m_points - points) <= 0) this->m_points = 0;
     else this->m_points -= points;
     return *this;

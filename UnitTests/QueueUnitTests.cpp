@@ -1,11 +1,14 @@
 
 
 #include <string>
+#include <fstream>
 #include <iostream>
 #include <vector>
 #include "catch.hpp"
 #include "relativeIncludes.h"
+#include <sstream>
 
+using namespace std;
 
 template <class T>
 void readQueue(std::string& string, Queue<T> &q)
@@ -403,12 +406,16 @@ TEST_CASE("Queue Advanced")
         transform(healthyQ, remove2HP);
         readQueue(result, healthyQ);
         expected = "{1(5), 2(6), 3(7), 4(8), 5(9), 8(12), 7(9)}";
+
         REQUIRE(result == expected);
 
         readQueue(result, filterHealthQ);
         expected = "{9(9), 11(11)}";
+
         REQUIRE(result == expected);
 
+        readQueue(result, healthyQ);
+        cout << result;
         filterHealthQ = filter(healthyQ, isGreaterThen7);
 
         readQueue(result, filterHealthQ);
