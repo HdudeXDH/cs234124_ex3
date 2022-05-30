@@ -106,7 +106,12 @@ Queue<T>::Queue():
 template<class T>
 void Queue<T>::pushBack(const T &t) {
     Node<T> *temp=new Node<T>;
-    temp->data=t;
+    try{
+        temp->data=t;
+    } catch (const std::bad_alloc& e){
+        delete temp;
+        throw;
+    }
     temp->next=NULL;
 
     if (count==0){
