@@ -37,11 +37,11 @@ public:
     //Enters item to end of line, saves copy.
     void pushBack(const T& t);
     //Return the first item in Queue
-    T& front();
+    T& front() const;
     // Delete the first item in Queue
     void popFront();
     // return the size of Queue
-    int size();
+    int size() const;
     // Exception:
     class EmptyQueue {};
     class Iterator;
@@ -125,7 +125,7 @@ void Queue<T>::pushBack(const T &t) {
 }
 
 template<class T>
-T& Queue<T>::front() {
+T& Queue<T>::front() const {
     if (this->count==0) {
         throw Queue<T>::EmptyQueue();
     }
@@ -148,7 +148,7 @@ Queue<T> ::~Queue()
 template<class T>
 Queue<T>& Queue<T>::operator=(const Queue<T>& queue){
     Queue temp= Queue();
-    for (Queue::Iterator it = queue.begin(); it != queue.end(); ++it) {
+    for (Queue::ConstIterator it = queue.begin(); it != queue.end(); ++it) {
         this->pushBack( *it);
     }
     return *this;
@@ -167,7 +167,7 @@ Queue<T>::Queue(const Queue<T> &s) :
 
 
 template<class T>
-int Queue<T>::size() {
+int Queue<T>::size() const {
     return this->count;
 }
 
