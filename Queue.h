@@ -148,6 +148,11 @@ Queue<T> ::~Queue()
 template<class T>
 Queue<T>& Queue<T>::operator=(const Queue<T>& queue){
     Queue temp= Queue();
+    //empty current values:
+    while(count>0){
+        popFront();
+    }
+    //load new values:
     for (Queue::ConstIterator it = queue.begin(); it != queue.end(); ++it) {
         this->pushBack( *it);
     }
