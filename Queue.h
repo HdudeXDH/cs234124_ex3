@@ -24,7 +24,9 @@ struct Node{
 template<class T>
 class Queue {
     int count;
-    Node<T> *head,*tail;
+    Node<T> *head;
+    Node<T> *tail;
+
 //    template<class transform_func>
 //    friend void transform(Queue& queue, transform_func func);
 public:
@@ -79,6 +81,13 @@ public:
     bool operator!=(const Iterator& it) const;
     class InvalidOperation{};
 };
+template<class T>
+Queue<T>::Queue():
+        count(0),
+        head(NULL),
+        tail(NULL)
+        {
+}
 //
 //template<class T>
 //class Queue<T>::ConstIterator:public Queue<T>::Iterator {
@@ -92,12 +101,6 @@ public:
 //    const T& operator*() const;
 //};
 
-template<class T>
-Queue<T>::Queue():
-        head(NULL),
-        tail(NULL),
-        count(0){
-}
 
 template<class T>
 void Queue<T>::pushBack(const T &t) {
@@ -147,7 +150,7 @@ Queue<T>& Queue<T>::operator=(const Queue<T>& queue){
         this->pushBack( *it);
     }
     return *this;
-};
+}
 
 template<class T>
 Queue<T>::Queue(const Queue<T> &s) :
@@ -187,7 +190,7 @@ template<class T>
 bool Queue<T>::Iterator::operator!=(const Iterator& it) const{
     bool equal = *this==it;
     return not equal;
-};
+}
 
 template<class T>
 bool Queue<T>::Iterator::operator==(const Iterator& it) const{
@@ -197,7 +200,7 @@ bool Queue<T>::Iterator::operator==(const Iterator& it) const{
     else {
         return false;
     }
-};
+}
 
 template<class T>
 typename Queue<T>::Iterator& Queue<T>::Iterator::operator++() {
@@ -205,6 +208,7 @@ typename Queue<T>::Iterator& Queue<T>::Iterator::operator++() {
         throw Iterator::InvalidOperation();
     }
     this->current_node = this->current_node->next;
+    return *this;
 }
 
 
@@ -212,7 +216,7 @@ template<class T>
 T& Queue<T>::Iterator::operator*() const {
     T& temp = this->current_node->data;
     return temp;
-};
+}
 
 //template<class T>
 //typename Queue<T>::Iterator Queue<T>::begin()  {
@@ -294,7 +298,7 @@ template<class T>
 bool Queue<T>::ConstIterator::operator!=(const ConstIterator& it) const{
     bool equal = *this==it;
     return not equal;
-};
+}
 
 template<class T>
 bool Queue<T>::ConstIterator::operator==(const ConstIterator& it) const{
@@ -304,7 +308,7 @@ bool Queue<T>::ConstIterator::operator==(const ConstIterator& it) const{
     else {
         return false;
     }
-};
+}
 
 template<class T>
 typename Queue<T>::ConstIterator& Queue<T>::ConstIterator::operator++() {
@@ -312,6 +316,7 @@ typename Queue<T>::ConstIterator& Queue<T>::ConstIterator::operator++() {
         throw ConstIterator::InvalidOperation();
     }
     this->current_node = this->current_node->next;
+    return *this;
 }
 
 

@@ -18,20 +18,20 @@ HealthPoints::HealthPoints(const int hp):
 bool operator!=(const HealthPoints& hp1, const HealthPoints& hp2){
     bool equal = hp1==hp2;
     return not equal;
-};
+}
 
 bool operator>=(const HealthPoints& hp1, const HealthPoints& hp2){
     bool bigger = hp2<hp1;
     bool equal = hp2==hp1;
     return bigger|equal;
-};
+}
 bool operator>(const HealthPoints& hp1, const HealthPoints& hp2){
     return  hp2<hp1;
 }
 
 bool operator<=(const HealthPoints& hp1, const HealthPoints& hp2){
     return  hp2>=hp1;
-};
+}
 
 
 bool operator==(const HealthPoints& hp1, const HealthPoints& hp2) {
