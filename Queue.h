@@ -106,10 +106,6 @@ Queue<T>::Queue():
 template<class T>
 void Queue<T>::pushBack(const T &t) {
     Node<T> *temp=new Node<T>;
-    //Node<T> *temp=new Node<T>;
-//    if(temp==NULL){
-//        throw std::bad_alloc();
-//    } todo: validate
     temp->data=t;
     temp->next=NULL;
 
@@ -121,8 +117,6 @@ void Queue<T>::pushBack(const T &t) {
     }
     tail=temp;
     count++;
-
-//    return t;
 }
 
 template<class T>
@@ -148,14 +142,22 @@ Queue<T> ::~Queue()
 
 template<class T>
 Queue<T>& Queue<T>::operator=(const Queue<T>& queue){
-    Queue temp= Queue();
+//    Queue temp= Queue();
     //empty current values:
     while(count>0){
         popFront();
     }
     //load new values:
-    for (Queue::ConstIterator it = queue.begin(); it != queue.end(); ++it) {
-        this->pushBack( *it);
+    try {
+        for (Queue::ConstIterator it = queue.begin(); it != queue.end(); ++it) {
+            this->pushBack( *it);
+        };
+    }
+    catch (const std::bad_alloc& e) {
+        while(count>0){
+            this->popFront();
+        }
+        throw;
     }
     return *this;
 }
@@ -166,8 +168,15 @@ Queue<T>::Queue(const Queue<T> &s) :
     head(NULL),
     tail(NULL)
     {
-    for (Queue::ConstIterator it = s.begin(); it != s.end(); ++it) {
-        pushBack( *it);
+    try{
+        for (Queue::ConstIterator it = s.begin(); it != s.end(); ++it) {
+            pushBack( *it);
+        }
+    } catch(const std::bad_alloc& e) {
+            while (count>0) {
+                popFront();
+            }
+            throw;
     }
 }
 
